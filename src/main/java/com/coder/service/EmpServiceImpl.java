@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+<<<<<<< HEAD
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+=======
+>>>>>>> 3e58c6b86bcdad02e12416fd2af53c7ec671ff76
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,10 +30,14 @@ public class EmpServiceImpl implements EmpService {
 	EmpRepo repo;
 	@Autowired
 	RestTemplate restTemplate;
+<<<<<<< HEAD
 	//getting salary from another microservice
 	private final static String GET_SALARY_URL = "http://localhost:8081/salary";
 	
 	private final Executor executor = Executors.newFixedThreadPool(2);
+=======
+	private final static String GET_SALARY_URL = "http://localhost:8081/salary";
+>>>>>>> 3e58c6b86bcdad02e12416fd2af53c7ec671ff76
 	@Override
 	public Employee getEmpDetail(int id) {
 		
@@ -46,6 +53,7 @@ public class EmpServiceImpl implements EmpService {
 		return "failed to add Employee detail";
 	}
 
+<<<<<<< HEAD
 	/*
 	 * @Override public Map<String, Object> getSpecificEmpData(int id) {
 	 * 
@@ -114,4 +122,26 @@ public class EmpServiceImpl implements EmpService {
 
 
 
+=======
+	@Override
+	public Map<String, Object> getSpecificEmpData(int id) {
+		
+		EmployeeData obj = repo.findByCustom(id);
+		if (obj == null) {
+		    throw new RuntimeException("Employee not found with ID: " + id);
+		}
+		System.out.println(obj);
+		Map<String,Object> map=new HashMap<>();
+		map.put("eid",obj.getEmpid());
+		map.put("ename", obj.getEmpName());
+		map.put("depart",obj.getDepartment());
+		
+	    Integer salary = restTemplate.getForObject(GET_SALARY_URL, Integer.class);
+	    map.put("salary", salary);
+	    
+	    System.out.println(map);
+		return map;
+	}
+
+>>>>>>> 3e58c6b86bcdad02e12416fd2af53c7ec671ff76
 }
